@@ -1,0 +1,67 @@
+This happens when I have three clients running while starting the main menu
+
+LogBlueprintUserMessages: [PS_Gameplay_C_0] Client 0: Checking sequence
+LogBlueprintUserMessages: [PS_Gameplay_C_1] Client 0: Checking sequence
+LogBlueprintUserMessages: [PS_Gameplay_C_0] Client 1: Checking sequence
+LogBlueprintUserMessages: [PS_Gameplay_C_2] Client 0: Checking sequence
+LogBlueprintUserMessages: [PS_Gameplay_C_1] Client 1: Checking sequence
+LogBlueprintUserMessages: [PS_Gameplay_C_0] Client 2: Checking sequence
+LogBlueprintUserMessages: [PS_Gameplay_C_1] Client 2: Checking sequence
+LogBlueprintUserMessages: [PS_Gameplay_C_2] Client 1: Checking sequence
+LogBlueprintUserMessages: [PS_Gameplay_C_2] Client 2: Checking sequence		Client	Called From	Type
+
+When host hosts game
+LogBlueprintUserMessages: [GM_Gameplay_C_0] Server: Checking sequence		0		Server		GameMode
+LogBlueprintUserMessages: [GS_Gameplay_C_0] Server: Checking sequence		0		Server		GameState
+LogBlueprintUserMessages: [PC_Gameplay_C_0] Server: Checking sequence		0		Server		PlayerController
+LogBlueprintUserMessages: [PS_Gameplay_C_0] Server: Checking sequence		0		Server		PlayerState
+
+When a client logs on
+LogBlueprintUserMessages: [PS_Gameplay_C_1] Server: Checking sequence		1		Server		PlayerState
+LogBlueprintUserMessages: [PC_Gameplay_C_1] Server: Checking sequence		1		Server		PlayerController
+LogBlueprintUserMessages: [PC_Gameplay_C_0] Client 1: Checking sequence		0		Client 1	PlayerController
+LogBlueprintUserMessages: [PS_Gameplay_C_0] Client 1: Checking sequence		0		Client 1	PlayerState
+LogBlueprintUserMessages: [PS_Gameplay_C_1] Client 1: Checking sequence		1		Client 1	PlayerState
+LogBlueprintUserMessages: [GS_Gameplay_C_0] Client 1: Checking sequence		0		Client 1	GameState
+
+When the next client logs on
+LogBlueprintUserMessages: [PS_Gameplay_C_2] Server: Checking sequence		2		Server		PlayerState
+LogBlueprintUserMessages: [PC_Gameplay_C_2] Server: Checking sequence		2		Server		PlayerController
+LogBlueprintUserMessages: [PS_Gameplay_C_2] Client 1: Checking sequence		2		Client 1	PlayerState
+LogBlueprintUserMessages: [PC_Gameplay_C_0] Client 2: Checking sequence		0		Client 2	PlayerController
+LogBlueprintUserMessages: [GS_Gameplay_C_0] Client 2: Checking sequence		0		Client 2	GameState
+LogBlueprintUserMessages: [PS_Gameplay_C_0] Client 2: Checking sequence		0		Client 2	PlayerState
+LogBlueprintUserMessages: [PS_Gameplay_C_1] Client 2: Checking sequence		1		Client 2	PlayerState
+LogBlueprintUserMessages: [PS_Gameplay_C_2] Client 2: Checking sequence		2		Client 2	PlayerState
+
+There's a total of 9 PlayerStates once each client logs in, one for each player, and an instance exists for each client
+
+There's a total of 5 PlayerControllers. One exists for each player on the host computer, and on local computers, one exists for the client and one for the host.
+
+Total of 3 GameStates, but it looks like they're the same GameState, but existing locally
+	Yes, GameState is replicated across all clients, so it's a good place to store info all clients need (like 
+	creatures left in wave, time left in match, tacos remaining in bathtub, etc.)
+
+I believe the PlayerController is always created on the server first, then on the client.
+
+LogBlueprintUserMessages: [PC_Gameplay_C_0] Server: PC_Gameplay
+LogBlueprintUserMessages: [PC_Gameplay_C_1] Server: PC_Gameplay1
+LogBlueprintUserMessages: [PC_Gameplay_C_0] Client 1: PC_Gameplay
+LogBlueprintUserMessages: [PC_Gameplay_C_2] Server: PC_Gameplay2
+LogBlueprintUserMessages: [PC_Gameplay_C_0] Client 2: PC_Gameplay
+
+So, maybe I could do something like this
+
+PC_Gameplay.OnBeginPlay
+	if (bIsServer && GM_Gameplay.bHostHasCharacterClass) return; // if we're calling from the server, and the host already has their character class set, bail out
+	this.CharacterClass = LoadGame();
+	if (bIsServer) GM_Gameplay.SetHostHasCharacterClass(true);
+	// In theory, this should work since it'd be called from the client and not the server, unless it's the first time the server calls it, in which case it loads it's local file
+	
+	that did not work
+		
+		
+		
+		
+		
+		

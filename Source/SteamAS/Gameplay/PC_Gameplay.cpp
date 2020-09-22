@@ -4,7 +4,7 @@
 #include "PC_Gameplay.h"
 
 
-void APC_Gameplay::ServerRecieveCharacterClass_Implementation(UClass* SelectedCharacterClass)
+void APC_Gameplay::ServerRecieveCharacterClass_Implementation(TSubclassOf<AGameplayCharacterBase> SelectedCharacterClass)
 {
 	this->CharacterClass = SelectedCharacterClass;
 }

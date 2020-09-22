@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayCharacterBase.h"
 #include "GameFramework/PlayerController.h"
 #include "PC_Gameplay.generated.h"
 
@@ -14,8 +15,8 @@ class STEAMAS_API APC_Gameplay : public APlayerController
 public:
 
 	UFUNCTION(Server, Reliable, BlueprintCallable)
-		void ServerRecieveCharacterClass(UClass* SelectedCharacterClass);
+		void ServerRecieveCharacterClass(TSubclassOf<AGameplayCharacterBase> SelectedCharacterClass);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UClass* CharacterClass = nullptr;
+		TSubclassOf<AGameplayCharacterBase> CharacterClass;
 };
