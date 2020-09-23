@@ -1,5 +1,7 @@
 For now, I'm keeping "Exclude editor content when cooking" unticked since it only take up like 2mb and we're not trying to make this for mobile or something. 
 
+The first noticable advantage of using PAK files when cooking is it takes a lot less time to transfer over to a flash drive. I'd assume it's just a lot easier to deal with one large file than it is many small files.
+
 This happens when I have three clients running while starting the main menu
 
 LogBlueprintUserMessages: [PS_Gameplay_C_0] Client 0: Checking sequence

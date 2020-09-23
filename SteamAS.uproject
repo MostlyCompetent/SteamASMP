@@ -40,6 +40,10 @@
 				"Win64",
 				"Android"
 			]
+		},
+		{
+			"Name": "SteamSockets",
+			"Enabled": true
 		}
 	]
 }
