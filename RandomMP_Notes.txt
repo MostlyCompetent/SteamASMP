@@ -1,4 +1,4 @@
-For now, I'm keeping "Exclude editor content when cooking" unticked since it only take up like 2mb and we're not trying to make this for mobile or something.
+For now, I'm keeping "Exclude editor content when cooking" unticked since it only take up like 2mb and we're not trying to make this for mobile or something. 
 
 This happens when I have three clients running while starting the main menu
 
