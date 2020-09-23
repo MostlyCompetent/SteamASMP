@@ -1,3 +1,5 @@
+For now, I'm keeping "Exclude editor content when cooking" unticked since it only take up like 2mb and we're not trying to make this for mobile or something.
+
 This happens when I have three clients running while starting the main menu
 
 LogBlueprintUserMessages: [PS_Gameplay_C_0] Client 0: Checking sequence
@@ -50,18 +52,6 @@ LogBlueprintUserMessages: [PC_Gameplay_C_0] Client 1: PC_Gameplay
 LogBlueprintUserMessages: [PC_Gameplay_C_2] Server: PC_Gameplay2
 LogBlueprintUserMessages: [PC_Gameplay_C_0] Client 2: PC_Gameplay
 
-So, maybe I could do something like this
+This isn't multiplayer related, but I wanted to note it somewhere: in the engine content of a packaged game, there is a file called DefaultBloomKernel.uexp that's like 32mb. This is used for FFT bloom, which (I believe) is only used for convolution bloom, which we don't really use in games since it's too expensive, so it can probably go. I'm not sure if ticking "exclude editor content when cooking" makes that go away when you pack the game.
+Just checked, it does not. So, if we're not using convolution bloom, we should be able to blacklist this file, which is described briefly here -> https://forums.unrealengine.com/development-discussion/android-development/118929-defaultbloomkernel-uexp-what-is-it-and-is-there-any-way-to-reduce-its-size
 
-PC_Gameplay.OnBeginPlay
-	if (bIsServer && GM_Gameplay.bHostHasCharacterClass) return; // if we're calling from the server, and the host already has their character class set, bail out
-	this.CharacterClass = LoadGame();
-	if (bIsServer) GM_Gameplay.SetHostHasCharacterClass(true);
-	// In theory, this should work since it'd be called from the client and not the server, unless it's the first time the server calls it, in which case it loads it's local file
-	
-	that did not work
-		
-		
-		
-		
-		
-		
