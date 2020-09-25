@@ -78,4 +78,6 @@ DerivedDataCache/*
 Content/StarterContent/*
 Content/InfinityBladeAdversaries/*
 Content/InfinityBladeWarriors/*
+Content/ModularRPGHeroesPolyart/*
+!Content/ModularRPGHeroesPolyart/CharacterBP/*
 
